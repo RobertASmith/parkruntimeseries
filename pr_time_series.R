@@ -16,7 +16,7 @@ library(forecast)
 # Reading in Data
 #===
 
-setwd("C:/Users/Robert/Google Drive/Other Projects/PARKRUN/Parkrun 201920")   # home
+#setwd("C:/Users/Robert/Google Drive/Other Projects/PARKRUN/Parkrun 201920")   # home
 #setwd("C:/Users/cmp16ras/Google Drive/Other Projects/PARKRUN/Parkrun 201920")  # work
 
 # read in locations data with longitudes & lattitudes
@@ -145,9 +145,6 @@ legend(x = 2015, y = 1600,
        cex = 0.6)
 
 
-# add real data to see how close I was:
-as.data.frame(forecast(fit3, 50))
-as.data.frame(parkrunactual )
 
 
 
