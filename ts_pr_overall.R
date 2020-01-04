@@ -17,9 +17,6 @@ library(ggplot2)
 # Reading in Data
 #===
 
-#setwd("C:/Users/Robert/Google Drive/Other Projects/PARKRUN/Parkrun 201920")   # home
-#setwd("C:/Users/cmp16ras/Google Drive/Other Projects/PARKRUN/Parkrun 201920")  # work
-
 # read in locations data with longitudes & lattitudes
 locations <- read.csv(file = "parkrun_locations18.csv")
 
@@ -143,6 +140,7 @@ legend(x = 2014, y = 100000,
        border = NA,
        bty = "n",
        cex = 0.6)
+<<<<<<< HEAD
 
 #=== 
 # WHOLE TIME SERIES
@@ -159,3 +157,5 @@ plot(fit,main = "Finishers at parkrun")
 stl(x = whole.ts, s.window=51)
 
 
+=======
+>>>>>>> 71bf4ff3b46ecda17b5fbd84e40a391b15bcc7d0
