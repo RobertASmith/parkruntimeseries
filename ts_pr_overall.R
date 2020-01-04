@@ -10,6 +10,7 @@ library(tidyr)
 library(dplyr)
 library(lubridate)
 library(forecast)
+library(ggplot2)
 #install.packages("forecast")
 
 #===
@@ -107,7 +108,7 @@ plot(fit1)
 fit2 <- HoltWinters(parkrunts, gamma=FALSE)
 plot(fit2)
 # triple exponential - models level, trend, and seasonal components
-fit3 <- HoltWinters(parkrunts,seasonal = "mult")
+fit3 <- HoltWinters(parkrunts,seasonal = "multiplicative")
 plot(fit3)
 
 
@@ -116,24 +117,45 @@ plot(fit3)
 #===
 
 # forcast forward 52 periods
-plot(forecast(fit2, 52))
+plot(forecast(fit3, 52))
+
+#load validation data
+validation <- read.csv(file = "pr_website.csv") %>% 
+  mutate(date = as.Date(date,'%d/%m/%Y'))
 
 
-
-
+validation.ts <- ts(data  = validation$athletes[validation$date > last(df$tsdate)], 
+                    start = c(year(last(df$tsdate)), week(last(df$tsdate))), 
+                    end   = c(year(last(validation$date)), week(last(validation$date))), 
+                    deltat = 1/52)
 
 # plot the predicted vs actual data.
-plot(forecast(fit3, 40),
-     include = 700,
+plot(forecast(fit3, 100),
+     include = 300,
      main = "Weekly parkrun attendance UK",
      xlab = "Date",
      ylab = "Number of Finishers")
-#lines(x = bushyts,type="p",col= "red")
-#lines(x = bushyts,type="l",col= "red")
-legend(x = 2005, y = 100000,
+lines(x=validation.ts,type = "b",col="red")
+legend(x = 2014, y = 100000,
        lty = c(1,1),
-       legend = c("historical data", "forecast"),
-       col = c("black","blue"),
+       legend = c("historical data", "forecast", "actual"),
+       col = c("black","blue","red"),
        border = NA,
        bty = "n",
        cex = 0.6)
+
+#=== 
+# WHOLE TIME SERIES
+#===
+
+whole.ts <- ts(data  = validation$athletes, 
+                    start = c(year(first(validation$date)), week(first(validation$date))), 
+                    end   = c(year(last(validation$date)), week(last(validation$date))), 
+                    deltat = 1/52)
+
+fit <- stl(x = whole.ts, s.window=51)
+plot(fit,main = "Finishers at parkrun")
+
+stl(x = whole.ts, s.window=51)
+
+
