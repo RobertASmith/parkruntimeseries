@@ -16,9 +16,6 @@ library(forecast)
 # Reading in Data
 #===
 
-#setwd("C:/Users/Robert/Google Drive/Other Projects/PARKRUN/Parkrun 201920")   # home
-#setwd("C:/Users/cmp16ras/Google Drive/Other Projects/PARKRUN/Parkrun 201920")  # work
-
 # read in locations data with longitudes & lattitudes
 locations <- read.csv(file = "parkrun_locations18.csv")
 
